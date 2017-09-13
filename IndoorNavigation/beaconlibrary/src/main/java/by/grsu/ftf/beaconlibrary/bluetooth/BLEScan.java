@@ -23,20 +23,29 @@ public class BLEScan extends Activity{
 
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothLeScanner bluetoothLeScanner;
-    private int RSSI ;
-    private String ID ;
+    private int rssi ;
+    private String id ;
 
 
     public BLEScan() {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        bluetoothAdapter.enable();
     }
 
-    public int getRSSI() {
-        return RSSI;
+    public String getRSSI() {
+        return String.valueOf(rssi);
     }
 
     public String getID() {
-        return ID;
+        return id;
+    }
+
+    private void setRssi(int rssi) {
+        this.rssi = rssi;
+    }
+
+    private void setId(String id) {
+        this.id = id;
     }
 
     public void startScan() {
@@ -46,7 +55,6 @@ public class BLEScan extends Activity{
 //            Toast.makeText(getApplicationContext(), "Turned on",Toast.LENGTH_LONG).show();
 //        }
 
-        bluetoothAdapter.enable();
 
         if(Build.VERSION.SDK_INT < 21){
             bluetoothAdapter.startLeScan(LeScanCallback);
@@ -76,9 +84,9 @@ public class BLEScan extends Activity{
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
             BluetoothDevice device = result.getDevice();
-            ID = device.getName();
-            RSSI = result.getRssi();
-            Log.d("Log", ID +"  "+ RSSI);
+            setId(device.getName());
+            setRssi(result.getRssi());
+            Log.d("Log", device.getName() +"  "+ result.getRssi());
 
         }
     };
@@ -86,14 +94,9 @@ public class BLEScan extends Activity{
     //SDK<21
     private BluetoothAdapter.LeScanCallback LeScanCallback = new BluetoothAdapter.LeScanCallback() {
         public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
-            new Runnable() {
-                public void run() {
-                    ID = device.getName();
-                    RSSI = rssi;
-                    Log.d("Log", ID +"  " + RSSI);
-
-                }
-            };
+            setId(device.getName());
+            setRssi(rssi);
+            Log.d("Log", device.getName() +"  " + rssi);
         }
     };
 

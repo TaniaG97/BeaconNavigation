@@ -15,7 +15,7 @@ public class BeaconService extends Service {
     }
 
     Beacon beacon = new Beacon();
-    BLEScan BLEScan = new BLEScan();
+//    BLEScan BLEScan = new BLEScan();
 
     public static final String KEY_ID = "KEY_ID";
     public static final String KEY_RSSI = "KEY_RSSI";
