@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:onClick="startservice"
         android:text="start" />
 
     <Button
@@ -33,7 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/start"
         android:layout_alignParentEnd="true"
-        android:onClick="stopservice"
         android:text="stop" />
 
     <ListView

@@ -1,6 +1,5 @@
 package by.grsu.ftf.beaconlibrary.beacon;
 
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -11,10 +10,10 @@ import java.util.Random;
 
 public class Beacon {
 
-    ArrayList<String> listID = new ArrayList<>();
-    ArrayList<Integer> listRSSI0 = new ArrayList<>();
-    ArrayList<Integer> listX = new ArrayList<>();
-    ArrayList<Integer> listY = new ArrayList<>();
+    private ArrayList<String> listID = new ArrayList<>();
+    private ArrayList<Integer> listRSSI0 = new ArrayList<>();
+    private ArrayList<Integer> listX = new ArrayList<>();
+    private ArrayList<Integer> listY = new ArrayList<>();
 
     Random random = new Random();
 
@@ -37,7 +36,7 @@ public class Beacon {
         return id;
     }
 
-    public void CreateBeacon(String id, int rssi0, int x, int y){
+    private void CreateBeacon(String id, int rssi0, int x, int y){
         listID.add(id);
         listRSSI0.add(rssi0);
         listX.add(x);

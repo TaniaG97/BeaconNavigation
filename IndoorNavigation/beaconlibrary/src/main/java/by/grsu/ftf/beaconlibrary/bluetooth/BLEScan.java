@@ -8,8 +8,12 @@ import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
+import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
+
+import static by.grsu.ftf.beaconlibrary.beacon.BeaconService.KEY_ID;
+import static by.grsu.ftf.beaconlibrary.beacon.BeaconService.KEY_RSSI;
 
 
 /**
@@ -88,6 +92,12 @@ public class BLEScan extends Activity{
             setRssi(result.getRssi());
             Log.d("Log", device.getName() +"  "+ result.getRssi());
 
+            Intent intent = new Intent("KEY_INTENT_FILTER");
+            intent.putExtra(KEY_ID, device.getName() );
+            intent.putExtra(KEY_RSSI,String.valueOf(result.getRssi()) );
+            intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+            sendBroadcast(intent);
+
         }
     };
 
@@ -97,6 +107,12 @@ public class BLEScan extends Activity{
             setId(device.getName());
             setRssi(rssi);
             Log.d("Log", device.getName() +"  " + rssi);
+
+            Intent intent = new Intent("KEY_INTENT_FILTER");
+            intent.putExtra(KEY_ID, device.getName() );
+            intent.putExtra(KEY_RSSI,String.valueOf(rssi));
+            intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
+            sendBroadcast(intent);
         }
     };
 
