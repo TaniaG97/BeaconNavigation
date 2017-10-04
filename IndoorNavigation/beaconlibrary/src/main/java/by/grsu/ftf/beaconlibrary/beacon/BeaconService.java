@@ -15,10 +15,14 @@ public class BeaconService extends Service {
     }
 
     Beacon beacon = new Beacon();
-//    BLEScan BLEScan = new BLEScan();
+    BLEScan BLEScan = new BLEScan();
 
     public static final String KEY_ID = "KEY_ID";
     public static final String KEY_RSSI = "KEY_RSSI";
+//    public static final String KEY_ID_Beacon = "KEY_ID_Beacon";
+//    public static final String KEY_RSSI_Beacon = "KEY_RSSI_Beacon";
+//    public static final String KEY_ID_BLEScan = "KEY_ID_BLEScan";
+//    public static final String KEY_RSSI_BLEScan = "KEY_RSSI_BLEScan";
 
     private Handler mHandler = new Handler();
 
@@ -35,13 +39,18 @@ public class BeaconService extends Service {
     private Runnable timeUpdaterRunnable = new Runnable() {
         public void run() {
 
-//            BLEScan.startScan();
+            BLEScan.startScan();
 
             Intent intent = new Intent("KEY_INTENT_FILTER");
-            intent.putExtra(KEY_ID, beacon.GetID() );
-            intent.putExtra(KEY_RSSI, beacon.GetRSSI() );
-//            intent.putExtra(KEY_ID, BLEScan.getID());
-//            intent.putExtra(KEY_RSSI, BLEScan.getRSSI() );
+
+            if(BLEScan.GetId().equals("ID")) {
+                intent.putExtra(KEY_ID, beacon.GetId());
+                intent.putExtra(KEY_RSSI, beacon.GetRssi());
+            }
+            else {
+                intent.putExtra(KEY_ID, BLEScan.GetId());
+                intent.putExtra(KEY_RSSI, BLEScan.GetRssi());
+            }
             intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
             sendBroadcast(intent);
 
@@ -53,6 +62,7 @@ public class BeaconService extends Service {
     @Override
     public void onDestroy() {
         mHandler.removeMessages(0);
+        BLEScan.stopScan();
         super.onDestroy();
     }
 

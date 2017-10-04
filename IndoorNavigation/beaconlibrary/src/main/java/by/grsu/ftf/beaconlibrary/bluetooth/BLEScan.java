@@ -8,12 +8,10 @@ import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
 import android.bluetooth.le.ScanSettings;
-import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 
-import static by.grsu.ftf.beaconlibrary.beacon.BeaconService.KEY_ID;
-import static by.grsu.ftf.beaconlibrary.beacon.BeaconService.KEY_RSSI;
+import by.grsu.ftf.beaconlibrary.BeaconInterface;
 
 
 /**
@@ -22,43 +20,22 @@ import static by.grsu.ftf.beaconlibrary.beacon.BeaconService.KEY_RSSI;
 
 
 
-public class BLEScan extends Activity{
-
+public class BLEScan extends Activity implements BeaconInterface{
 
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothLeScanner bluetoothLeScanner;
-    private int rssi ;
-    private String id ;
-
+    private String mId = "ID";
+    private String mRssi = "RSSI";
 
     public BLEScan() {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        bluetoothAdapter.enable();
-    }
 
-    public String getRSSI() {
-        return String.valueOf(rssi);
-    }
-
-    public String getID() {
-        return id;
-    }
-
-    private void setRssi(int rssi) {
-        this.rssi = rssi;
-    }
-
-    private void setId(String id) {
-        this.id = id;
     }
 
     public void startScan() {
-//        if (!bluetoothAdapter.isEnabled()) {
-//            Intent turnOn = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-//            startActivityForResult(turnOn, 0);
-//            Toast.makeText(getApplicationContext(), "Turned on",Toast.LENGTH_LONG).show();
-//        }
-
+        if (!bluetoothAdapter.isEnabled()) {
+            bluetoothAdapter.enable();
+        }
 
         if(Build.VERSION.SDK_INT < 21){
             bluetoothAdapter.startLeScan(LeScanCallback);
@@ -88,33 +65,30 @@ public class BLEScan extends Activity{
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
             BluetoothDevice device = result.getDevice();
-            setId(device.getName());
-            setRssi(result.getRssi());
             Log.d("Log", device.getName() +"  "+ result.getRssi());
 
-            Intent intent = new Intent("KEY_INTENT_FILTER");
-            intent.putExtra(KEY_ID, device.getName() );
-            intent.putExtra(KEY_RSSI,String.valueOf(result.getRssi()) );
-            intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-            sendBroadcast(intent);
-
+            mId = device.getName();
+            mRssi = String.valueOf(result.getRssi());
         }
     };
 
     //SDK<21
     private BluetoothAdapter.LeScanCallback LeScanCallback = new BluetoothAdapter.LeScanCallback() {
         public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
-            setId(device.getName());
-            setRssi(rssi);
             Log.d("Log", device.getName() +"  " + rssi);
-
-            Intent intent = new Intent("KEY_INTENT_FILTER");
-            intent.putExtra(KEY_ID, device.getName() );
-            intent.putExtra(KEY_RSSI,String.valueOf(rssi));
-            intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-            sendBroadcast(intent);
+            mId = device.getName();
+            mRssi = String.valueOf(rssi);
         }
     };
 
 
+    @Override
+    public String GetRssi() {
+        return  mRssi;
+    }
+
+    @Override
+    public String GetId() {
+        return mId;
+    }
 }
