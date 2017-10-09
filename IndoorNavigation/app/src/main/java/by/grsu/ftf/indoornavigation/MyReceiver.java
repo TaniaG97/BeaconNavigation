@@ -14,10 +14,10 @@ public class MyReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        String id = intent.getStringExtra(KEY_ID);
-        Log.d("Log", id);
-        String rssi = intent.getStringExtra(KEY_RSSI);
-        Log.d("Log", rssi);
+//        String id = intent.getStringExtra(KEY_ID);
+//        Log.d("Log", id);
+//        String rssi = intent.getStringExtra(KEY_RSSI);
+//        Log.d("Log", rssi);
 
     }
 }

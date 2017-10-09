@@ -7,39 +7,12 @@
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
 
-
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textview"
-        android:scrollbars="vertical"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/start"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:id="@+id/start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:text="start" />
-
-    <Button
-        android:id="@+id/stop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/start"
-        android:layout_alignParentEnd="true"
-        android:text="stop" />
-
     <ListView
-        android:id="@+id/list"
+        android:id="@+id/lvSimple"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/textview" />
+        android:layout_height="wrap_content">
+    </ListView>
+
 
 
 </RelativeLayout>
