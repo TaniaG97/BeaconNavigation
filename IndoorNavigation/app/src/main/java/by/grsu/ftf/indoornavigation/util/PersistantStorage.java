@@ -1,4 +1,4 @@
-package by.grsu.ftf.indoornavigation;
+package by.grsu.ftf.indoornavigation.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
