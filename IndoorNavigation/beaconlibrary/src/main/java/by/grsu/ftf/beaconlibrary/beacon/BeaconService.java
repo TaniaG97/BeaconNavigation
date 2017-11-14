@@ -16,8 +16,8 @@ public class BeaconService extends Service {
     public BeaconService() {
     }
 
-    Beacon beacon = new Beacon();
-    BLEScan BLEScan = new BLEScan();
+    BeaconSimulator beaconSimulator = new BeaconSimulator();
+//    BLEScan BLEScan = new BLEScan();
 
     public static final String KEY_ID = "KEY_ID";
     public static final String KEY_RSSI = "KEY_RSSI";
@@ -31,15 +31,10 @@ public class BeaconService extends Service {
     private Runnable timeUpdaterRunnable = new Runnable() {
         public void run() {
 
-            BLEScan.startScan();
+//            BLEScan.startScan();
 
-            if(BLEScan.GetId().equals("ID")) {
-                callbacks.GetBeaconFromService(beacon.GetId(), beacon.GetRssi());
-            }
-            else {
-                callbacks.GetBeaconFromService(BLEScan.GetId(), BLEScan.GetRssi());
-            }
-
+            callbacks.GetBeaconFromService(beaconSimulator.GetBeacon());
+//            callbacks.GetBeaconFromService(BLEScan.GetBeacon());
 
             mHandler.postDelayed(this, 100);
         }
@@ -56,7 +51,7 @@ public class BeaconService extends Service {
     @Override
     public void onDestroy() {
         mHandler.removeCallbacks(timeUpdaterRunnable);
-        BLEScan.stopScan();
+//        BLEScan.stopScan();
         serviceRun = true;
         super.onDestroy();
     }
@@ -75,6 +70,6 @@ public class BeaconService extends Service {
     }
 
     public interface Callbacks {
-        void GetBeaconFromService(String id, String rssi);
+        void GetBeaconFromService(Beacon beacon);
     }
 }

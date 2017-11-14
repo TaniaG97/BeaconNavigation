@@ -19,7 +19,7 @@
 
 
         <receiver
-            android:name=".MyReceiver"
+            android:name=".util.MyReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

@@ -1,4 +1,4 @@
-package by.grsu.ftf.indoornavigation;
+package by.grsu.ftf.indoornavigation.util;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

@@ -1,7 +1,6 @@
 package by.grsu.ftf.beaconlibrary.bluetooth;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.le.BluetoothLeScanner;
@@ -11,7 +10,7 @@ import android.bluetooth.le.ScanSettings;
 import android.os.Build;
 import android.util.Log;
 
-import by.grsu.ftf.beaconlibrary.BeaconInterface;
+import by.grsu.ftf.beaconlibrary.beacon.Beacon;
 
 
 /**
@@ -20,16 +19,19 @@ import by.grsu.ftf.beaconlibrary.BeaconInterface;
 
 
 
-public class BLEScan extends Activity implements BeaconInterface{
+public class BLEScan{
 
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothLeScanner bluetoothLeScanner;
-    private String mId = "ID";
-    private String mRssi = "RSSI";
+    private Beacon beacon = new Beacon("Null",0);
 
     public BLEScan() {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
+    }
+
+    public boolean BluetoothEnabled(){
+        return bluetoothAdapter.isEnabled();
     }
 
     public void startScan() {
@@ -67,8 +69,7 @@ public class BLEScan extends Activity implements BeaconInterface{
             BluetoothDevice device = result.getDevice();
             Log.d("Log", device.getName() +"  "+ result.getRssi());
 
-            mId = device.getName();
-            mRssi = String.valueOf(result.getRssi());
+            beacon = new Beacon(device.getName(), result.getRssi());
         }
     };
 
@@ -76,19 +77,12 @@ public class BLEScan extends Activity implements BeaconInterface{
     private BluetoothAdapter.LeScanCallback LeScanCallback = new BluetoothAdapter.LeScanCallback() {
         public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
             Log.d("Log", device.getName() +"  " + rssi);
-            mId = device.getName();
-            mRssi = String.valueOf(rssi);
+
+            beacon = new Beacon(device.getName(), rssi);
         }
     };
 
-
-    @Override
-    public String GetRssi() {
-        return  mRssi;
-    }
-
-    @Override
-    public String GetId() {
-        return mId;
+    public Beacon GetBeacon() {
+        return beacon;
     }
 }
