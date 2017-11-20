@@ -19,12 +19,18 @@ import by.grsu.ftf.indoornavigation.R;
 public class BeaconAdapter extends BaseAdapter {
 
     private List<Beacon> listBeacon;
-    private final LayoutInflater inflater;
 
     public BeaconAdapter(Context context, List<Beacon> beacon) {
         listBeacon=beacon;
-//        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater = LayoutInflater.from(context);
+    }
+
+    public void setBeaconList(List<Beacon> beacon) {
+        this.listBeacon = beacon;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
     }
 
     @Override
@@ -44,25 +50,35 @@ public class BeaconAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        if (convertView == null)
-        {
-            convertView = inflater.inflate(R.layout.item, null);
-            final BeaconAdapter.ViewHolder holder = new BeaconAdapter.ViewHolder();
-            holder.textView1 = (TextView) convertView.findViewById(R.id.txtId);
-            holder.textView2 = (TextView) convertView.findViewById(R.id.txtRssi);
-            convertView.setTag(holder);
+        View view = convertView;
+        BeaconHolder beaconHolder;
+        if (view == null) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item, parent, false);
+            TextView textViewIdBeacon = (TextView) view.findViewById(R.id.txtId);
+            TextView textViewRSSIBeacon = (TextView) view.findViewById(R.id.txtRssi);
+            RssiBar rssiBarCoefficient = (RssiBar) view.findViewById(R.id.RssiBar);
+            beaconHolder = new BeaconHolder(textViewIdBeacon, textViewRSSIBeacon, rssiBarCoefficient);
+            view.setTag(beaconHolder);
+        } else {
+            beaconHolder = (BeaconHolder) view.getTag();
         }
-
-        final BeaconAdapter.ViewHolder holder = (BeaconAdapter.ViewHolder) convertView.getTag();
-        final Beacon beacon = getItem(position);
-        holder.textView1.setText(beacon.getId());
-        holder.textView2.setText(beacon.getRssi());
-        return convertView;
+        Beacon beacon = getItem(position);
+        float coefficient = Math.abs((-90.0F - beacon.getRssi())/( -35.0F - -90.0F));
+        beaconHolder.textViewIdBeacon.setText(beacon.getId());
+        beaconHolder.textViewRSSIBeacon.setText(String.valueOf(beacon.getRssi()));
+        beaconHolder.rssiBarCoefficient.setValue(coefficient);
+        return view;
     }
 
-    private class ViewHolder {
-        public TextView textView1;
-        public TextView textView2;
+    private class BeaconHolder {
+        private TextView textViewIdBeacon;
+        private TextView textViewRSSIBeacon;
+        private RssiBar rssiBarCoefficient;
+
+        private BeaconHolder(TextView textViewIdBeacon, TextView textViewRSSIBeacon, RssiBar rssiBarCoefficient) {
+            this.textViewIdBeacon = textViewIdBeacon;
+            this.textViewRSSIBeacon = textViewRSSIBeacon;
+            this.rssiBarCoefficient = rssiBarCoefficient;
+        }
     }
 }
