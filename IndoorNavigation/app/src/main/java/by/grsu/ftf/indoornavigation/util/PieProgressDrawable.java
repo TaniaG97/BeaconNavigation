@@ -37,18 +37,11 @@ public class PieProgressDrawable extends Drawable {
 
     @Override
     public void draw(Canvas canvas) {
-        // Rotate the canvas around the center of the pie by 90 degrees
-        // counter clockwise so the pie stars at 12 o'clock.
         canvas.rotate(-90f, getBounds().centerX(), getBounds().centerY());
         mPaint.setStyle(Paint.Style.STROKE);
         canvas.drawOval(mBoundsF, mPaint);
         mPaint.setStyle(Paint.Style.FILL);
         canvas.drawArc(mInnerBoundsF, START_ANGLE, mDrawTo, true, mPaint);
-
-        // Draw inner oval and text on top of the pie (or add any other
-        // decorations such as a stroke) here..
-        // Don't forget to rotate the canvas back if you plan to add text!
-        // ...
     }
 
     @Override

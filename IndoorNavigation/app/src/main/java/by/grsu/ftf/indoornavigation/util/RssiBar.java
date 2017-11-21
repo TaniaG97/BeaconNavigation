@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
@@ -18,8 +19,12 @@ import by.grsu.ftf.indoornavigation.R;
 public class RssiBar extends View {
     private float value;
     private int colorBar;
+    private Paint mPaint = new Paint();
+    private RectF mBoundsF;
+    final float START_ANGLE = 0.f;
+    float mDrawTo;
 
-    private Paint paint = new Paint();
+
 
     public RssiBar (Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -30,12 +35,24 @@ public class RssiBar extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+
         float x = this.getMeasuredWidth();
         float y = this.getMeasuredHeight();
-        paint.setColor(Color.GRAY);
-        canvas.drawRect(0,0,x,y,paint);
-        paint.setColor(colorBar);
-        canvas.drawRect(0,0,value*x,y,paint);
+
+        mPaint.setColor(Color.GRAY);
+        canvas.drawRect(0,0,x,y,mPaint);
+        mPaint.setColor(colorBar);
+        canvas.drawRect(0,0,value*x,y,mPaint);
+
+////        Круговая диаграмма
+//        mBoundsF=new RectF(0,0,x,y);
+//        mDrawTo = START_ANGLE + ((float)360*value);
+//        canvas.rotate(-90f, x/2, y/2);
+//        mPaint.setColor(Color.GRAY);
+//        mPaint.setStyle(Paint.Style.STROKE);
+//        canvas.drawOval(mBoundsF, mPaint);
+//        mPaint.setStyle(Paint.Style.FILL);
+//        canvas.drawArc(mBoundsF, START_ANGLE, mDrawTo, true, mPaint);
     }
 
     public void setValue(float value) {
