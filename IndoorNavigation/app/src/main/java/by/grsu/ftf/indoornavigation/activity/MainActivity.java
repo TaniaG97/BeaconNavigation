@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements BeaconService.Cal
 
     boolean mBound;
     private BeaconService myBinder;
-    private BeaconAdapter bAdapter;
+    private BeaconAdapter2 bAdapter;
 
     private HashMap<String, Beacon> beaconHashMap = new HashMap<>();
 
@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity implements BeaconService.Cal
         lvSimple = (ListView) findViewById(R.id.lvSimple);
 
         List<Beacon> data = new ArrayList<>();
-        bAdapter = new BeaconAdapter(this, data);
+        bAdapter = new BeaconAdapter2(this, data);
         lvSimple.setAdapter(bAdapter);
     }
 

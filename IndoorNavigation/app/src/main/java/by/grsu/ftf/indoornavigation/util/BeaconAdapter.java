@@ -64,8 +64,8 @@ public class BeaconAdapter extends BaseAdapter {
         }
         Beacon beacon = getItem(position);
         float coefficient = Math.abs((-90.0F - beacon.getRssi())/( -35.0F - -90.0F));
-        beaconHolder.txtId.setText(beacon.getId());
-        beaconHolder.txtRssi.setText(String.valueOf(beacon.getRssi()));
+        beaconHolder.txtId.setText("Name: "+beacon.getId());
+        beaconHolder.txtRssi.setText("RSSI: "+String.valueOf(beacon.getRssi()));
         beaconHolder.rssiBar.setValue(coefficient);
         return view;
     }

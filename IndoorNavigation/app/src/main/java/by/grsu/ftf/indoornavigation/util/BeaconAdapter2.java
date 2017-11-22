@@ -23,17 +23,12 @@ public class BeaconAdapter2 extends BaseAdapter {
 
     private List<Beacon> listBeacon;
     private final LayoutInflater inflater;
-    private PieProgressDrawable pieProgressDrawable;
-
 
     public BeaconAdapter2(Context context, List<Beacon> beacon) {
         listBeacon=beacon;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        pieProgressDrawable = new PieProgressDrawable();
-        pieProgressDrawable.setColor(R.color.white);
-
-
     }
+
     public void setBeaconList(List<Beacon> beacon) {
         this.listBeacon = beacon;
     }
@@ -58,27 +53,26 @@ public class BeaconAdapter2 extends BaseAdapter {
 
         if (convertView == null)
         {
-            convertView = inflater.inflate(R.layout.item2, null);
+            convertView = inflater.inflate(R.layout.item2, parent, false);
             final BeaconAdapter2.ViewHolder holder = new BeaconAdapter2.ViewHolder();
             holder.textView1 = (TextView) convertView.findViewById(R.id.txtId);
             holder.textView2 = (TextView) convertView.findViewById(R.id.txtRssi);
-            holder.timeProgress = (ImageView) convertView.findViewById(R.id.time_progress);
+            holder.rssiBar = (RssiBar2) convertView.findViewById(R.id.RssiBar);
             convertView.setTag(holder);
         }
 
         final BeaconAdapter2.ViewHolder holder = (BeaconAdapter2.ViewHolder) convertView.getTag();
         final Beacon beacon = getItem(position);
-        holder.textView1.setText(beacon.getId());
-        holder.textView2.setText(String.valueOf(beacon.getRssi()));
-        holder.timeProgress.setImageDrawable(pieProgressDrawable);
-        pieProgressDrawable.setLevel(Math.abs(beacon.getRssi()));
-        holder.timeProgress.invalidate();
+        float coefficient = Math.abs((-90.0F - beacon.getRssi())/( -35.0F - -90.0F));
+        holder.textView1.setText("Name: "+beacon.getId());
+        holder.textView2.setText("RSSI: "+String.valueOf(beacon.getRssi()));
+        holder.rssiBar.setValue(coefficient);
         return convertView;
     }
 
     private class ViewHolder {
         public TextView textView1;
         public TextView textView2;
-        public ImageView timeProgress;
+        public RssiBar2 rssiBar;
     }
 }
