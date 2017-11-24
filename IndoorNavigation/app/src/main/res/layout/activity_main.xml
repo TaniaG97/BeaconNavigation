@@ -1,7 +1,7 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="10dp"
@@ -12,5 +12,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </ListView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/my_recycler_view"
+        android:scrollbars="vertical"
+        app:layoutManager="LinearLayoutManager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

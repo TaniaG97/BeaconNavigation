@@ -7,6 +7,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import by.grsu.ftf.beaconlibrary.beacon.BeaconService;
 import by.grsu.ftf.indoornavigation.R;
 import by.grsu.ftf.indoornavigation.util.BeaconAdapter;
 import by.grsu.ftf.indoornavigation.util.BeaconAdapter2;
+import by.grsu.ftf.indoornavigation.util.BeaconRecyclerViewAdapter;
 
 
 public class MainActivity extends AppCompatActivity implements BeaconService.Callbacks {
@@ -26,7 +28,8 @@ public class MainActivity extends AppCompatActivity implements BeaconService.Cal
 
     boolean mBound;
     private BeaconService myBinder;
-    private BeaconAdapter2 bAdapter;
+//    private BeaconAdapter2 bAdapter;
+    private BeaconRecyclerViewAdapter bAdapter;
 
     private HashMap<String, Beacon> beaconHashMap = new HashMap<>();
 
@@ -38,8 +41,13 @@ public class MainActivity extends AppCompatActivity implements BeaconService.Cal
         lvSimple = (ListView) findViewById(R.id.lvSimple);
 
         List<Beacon> data = new ArrayList<>();
-        bAdapter = new BeaconAdapter2(this, data);
-        lvSimple.setAdapter(bAdapter);
+
+//        bAdapter = new BeaconAdapter2(this, data);
+//        lvSimple.setAdapter(bAdapter);
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        bAdapter = new BeaconRecyclerViewAdapter(this, data);
+        recyclerView.setAdapter(bAdapter);
     }
 
     @Override
