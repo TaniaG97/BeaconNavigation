@@ -18,15 +18,6 @@
         </activity>
 
 
-        <receiver
-            android:name=".util.MyReceiver"
-            android:enabled="true"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="KEY_INTENT_FILTER" />
-            </intent-filter>
-        </receiver>
-
     </application>
 
 </manifest>

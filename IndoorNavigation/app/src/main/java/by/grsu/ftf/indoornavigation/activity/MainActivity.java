@@ -17,38 +17,41 @@ import java.util.List;
 import by.grsu.ftf.beaconlibrary.beacon.Beacon;
 import by.grsu.ftf.beaconlibrary.beacon.BeaconService;
 import by.grsu.ftf.indoornavigation.R;
-import by.grsu.ftf.indoornavigation.util.BeaconAdapter;
-import by.grsu.ftf.indoornavigation.util.BeaconAdapter2;
 import by.grsu.ftf.indoornavigation.util.BeaconRecyclerViewAdapter;
 
 
 public class MainActivity extends AppCompatActivity implements BeaconService.Callbacks {
 
-    private ListView lvSimple;
-
     boolean mBound;
     private BeaconService myBinder;
-//    private BeaconAdapter2 bAdapter;
     private BeaconRecyclerViewAdapter bAdapter;
-
     private HashMap<String, Beacon> beaconHashMap = new HashMap<>();
+    private List<Beacon> beaconsList;
+    private final String KEY = "KEY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        lvSimple = (ListView) findViewById(R.id.lvSimple);
-
-        List<Beacon> data = new ArrayList<>();
-
-//        bAdapter = new BeaconAdapter2(this, data);
-//        lvSimple.setAdapter(bAdapter);
-
         RecyclerView recyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
-        bAdapter = new BeaconRecyclerViewAdapter(this, data);
+        bAdapter = new BeaconRecyclerViewAdapter();
         recyclerView.setAdapter(bAdapter);
+//
+//        if (savedInstanceState != null) {
+//            beaconsList = savedInstanceState.getParcelableArrayList(KEY);
+//            if (beaconsList != null) {
+//                bAdapter.setBeaconList(beaconsList);
+//                bAdapter.notifyDataSetChanged();
+//            }
+//        }
     }
+
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//        outState.putParcelableArrayList(KEY, (ArrayList<? extends Beacon>) beaconsList);
+//    }
 
     @Override
     protected void onStart() {
@@ -96,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements BeaconService.Cal
     }
 
     private List<Beacon> SortingBeacon(Beacon beacon){
+
         List<Beacon> list = new ArrayList<>();
         beaconHashMap.put(beacon.getId(),beacon);
         for (Beacon s : beaconHashMap.values()) {

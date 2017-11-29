@@ -23,6 +23,12 @@ public class BeaconSimulator {
         CreateBeacon("id2",65,1,2);
         CreateBeacon("id3",65,2,2);
         CreateBeacon("id4",65,2,1);
+        CreateBeacon("id5",65,1,1);
+        CreateBeacon("id6",65,1,2);
+        CreateBeacon("id7",65,2,2);
+        CreateBeacon("id8",65,2,1);
+        CreateBeacon("id9",65,2,2);
+        CreateBeacon("id10",65,2,1);
     }
 
     private void CreateBeacon(String id, int rssi0, int x, int y){

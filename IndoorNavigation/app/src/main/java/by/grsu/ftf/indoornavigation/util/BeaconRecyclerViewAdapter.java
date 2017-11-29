@@ -1,12 +1,12 @@
 package by.grsu.ftf.indoornavigation.util;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import by.grsu.ftf.beaconlibrary.beacon.Beacon;
@@ -18,21 +18,15 @@ import by.grsu.ftf.indoornavigation.R;
 
 public class BeaconRecyclerViewAdapter extends RecyclerView.Adapter<BeaconRecyclerViewAdapter.ViewHolder> {
 
-    private LayoutInflater inflater;
-    private List<Beacon> beaconsList;
+    private List<Beacon> beaconsList = new ArrayList<>();
 
-    public BeaconRecyclerViewAdapter(Context context, List<Beacon> beaconsList) {
-        this.beaconsList = beaconsList;
-        this.inflater = LayoutInflater.from(context);
-    }
     public void setBeaconList(List<Beacon> beacon) {
         this.beaconsList = beacon;
     }
 
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = inflater.inflate(R.layout.item2, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item2, parent, false);
         return new ViewHolder(view);
     }
 
@@ -50,7 +44,7 @@ public class BeaconRecyclerViewAdapter extends RecyclerView.Adapter<BeaconRecycl
         return beaconsList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         final TextView textView1;
         final TextView textView2;
         final RssiBar2 rssiBar;

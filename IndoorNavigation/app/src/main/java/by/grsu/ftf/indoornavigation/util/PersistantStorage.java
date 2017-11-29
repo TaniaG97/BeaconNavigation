@@ -3,7 +3,12 @@ package by.grsu.ftf.indoornavigation.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import by.grsu.ftf.beaconlibrary.beacon.Beacon;
 
 /**
  * Created by Admin on 08.10.2017.
@@ -16,34 +21,35 @@ public class PersistantStorage {
     private static SharedPreferences.Editor editor = null;
     private static Context context = null;
 
-    public static void init( Context cntxt ){
-        context = cntxt;
-    }
 
     private static void init(){
         settings = context.getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE);
         editor = settings.edit();
     }
 
-    public static void addProperty( String name, String value ){
+    public static void addBeaconList(List<Beacon> list){
         if( settings == null ){
             init();
         }
-        editor.putString( name, value );
-        editor. apply();
+        for(Beacon i : list) {
+            editor.putString( i.getId(), String.valueOf(i.getRssi()));
+            editor. apply();
+        }
+
     }
 
-    public static String getProperty( String name ){
+    public static String getBeacon( String name ){
         if( settings == null ){
             init();
         }
         return settings.getString( name, null );
     }
 
-    public static Map getAll(){
+    public static Map getBeaconsMap(){
         if( settings == null ){
             init();
         }
         return settings.getAll();
     }
+
 }

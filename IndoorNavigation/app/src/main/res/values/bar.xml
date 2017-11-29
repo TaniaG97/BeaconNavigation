@@ -3,5 +3,6 @@
     <declare-styleable name="RssiBar">
         <attr name="value" format="float"/>
         <attr name="color" format="color"/>
+        <attr name="image" format="reference" />
     </declare-styleable>
 </resources>
